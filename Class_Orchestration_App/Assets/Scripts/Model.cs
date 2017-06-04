@@ -22,7 +22,8 @@ public class Model : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         model = objects[modelID];
-        model.transform.localPosition = new Vector3(0.0f, 0.0f, 10.0f);
+        model.SetActive(true);
+        //model.transform.localPosition = new Vector3(0.0f, 0.0f, 10.0f);
 	}
 
     // TODO: handle input
@@ -108,8 +109,10 @@ public class Model : MonoBehaviour {
 
     private void resetObject()
     {
-        model.transform.localPosition = new Vector3(0.0f, 0.0f, -10.0f);
+        model.SetActive(false);
+        //model.transform.localPosition = new Vector3(0.0f, 0.0f, -10.0f);
         model = objects[modelID];
-        model.transform.localPosition = new Vector3(0.0f, 0.0f, 10.0f);
+        //model.transform.localPosition = new Vector3(0.0f, 0.0f, 10.0f);
+        model.SetActive(true);
     }
 }
