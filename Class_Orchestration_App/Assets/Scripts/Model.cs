@@ -5,12 +5,13 @@ using UnityEngine;
 public class Model : MonoBehaviour {
 
     public GameObject[] objects = new GameObject[5];
+    public GameObject[] previewModels = new GameObject[5];
 
     // TODO: retrieve ID from database
     public int modelID;
 
     private GameObject model;
-
+    private GameObject preview;
 
     private bool scale = false;
     private bool rotate = false;
@@ -27,6 +28,24 @@ public class Model : MonoBehaviour {
 	}
 
     // TODO: handle input
+    public void leftArrow()
+    {
+        modelID = (modelID + 1) % 5;
+        previewObject();
+    }
+    public void rightArrow()
+    {
+        modelID = (modelID - 1) % 5;
+        previewObject();
+    }
+
+    public void previewObject()
+    {
+        preview.SetActive(false);
+        preview = previewModels[modelID];
+        preview.SetActive(true);
+        preview.transform.localPosition = new Vector3(0.0f, 0.0f, 10.0f);
+    }
 
     // Update is called once per frame
     void Update() {
@@ -107,12 +126,12 @@ public class Model : MonoBehaviour {
         // scaling, rotation, translation
     }
 
-    private void resetObject()
+    public void resetObject()
     {
         model.SetActive(false);
-        //model.transform.localPosition = new Vector3(0.0f, 0.0f, -10.0f);
+        //model.transform.localPosition = new Vector3(0.0f, 0.1f, 0.0f);
         model = objects[modelID];
-        //model.transform.localPosition = new Vector3(0.0f, 0.0f, 10.0f);
+        //model.transform.localPosition = new Vector3(0.0f, 0.1f, 0.0f);
         model.SetActive(true);
     }
 }
