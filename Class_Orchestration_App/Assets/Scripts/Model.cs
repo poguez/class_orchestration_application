@@ -23,19 +23,22 @@ public class Model : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         model = objects[modelID];
-        model.SetActive(true);
+        //model.SetActive(true);
+        preview = previewModels[modelID];
         //model.transform.localPosition = new Vector3(0.0f, 0.0f, 10.0f);
 	}
 
     // TODO: handle input
     public void leftArrow()
     {
-        modelID = (modelID + 1) % 5;
+        if (modelID == 0)
+            modelID = 5;
+        modelID = (modelID - 1) % 5;
         previewObject();
     }
     public void rightArrow()
     {
-        modelID = (modelID - 1) % 5;
+        modelID = (modelID + 1) % 5;
         previewObject();
     }
 
@@ -44,7 +47,7 @@ public class Model : MonoBehaviour {
         preview.SetActive(false);
         preview = previewModels[modelID];
         preview.SetActive(true);
-        preview.transform.localPosition = new Vector3(0.0f, 0.0f, 10.0f);
+        //preview.transform.localPosition = new Vector3(0.0f, 0.0f, 10.0f);
     }
 
     // Update is called once per frame
@@ -128,6 +131,7 @@ public class Model : MonoBehaviour {
 
     public void resetObject()
     {
+        preview.SetActive(false);
         model.SetActive(false);
         //model.transform.localPosition = new Vector3(0.0f, 0.1f, 0.0f);
         model = objects[modelID];
