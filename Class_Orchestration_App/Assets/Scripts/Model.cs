@@ -18,7 +18,7 @@ public class Model : MonoBehaviour {
     private bool translate = false;
 
     public float rotSpeed = 100.0f;
-    public float transSpeed = 1.0f;
+    public float transSpeed = 100.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -87,15 +87,13 @@ public class Model : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("Fire3"))
             scale = true;
 
-        if (Input.GetKeyUp(KeyCode.S) || Input.GetButtonDown("Fire3"))
+        if (Input.GetKeyUp(KeyCode.S) || Input.GetButtonUp("Fire3"))
             scale = false;
 
         if (scale)
         {
-            {
-                model.transform.localScale = model.transform.localScale + new Vector3(1.0f, 1.0f, 1.0f) * Input.GetAxis("Mouse X") * Time.deltaTime;
-                model.transform.localScale = model.transform.localScale + new Vector3(1.0f, 1.0f, 1.0f) * Input.GetAxis("Horizontal") * Time.deltaTime;
-            }
+            model.transform.localScale = model.transform.localScale + new Vector3(1.0f, 1.0f, 1.0f) * Input.GetAxis("Mouse X") * Time.deltaTime;
+            model.transform.localScale = model.transform.localScale + new Vector3(1.0f, 1.0f, 1.0f) * Input.GetAxis("Horizontal") * Time.deltaTime;
         }
 
         if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("Fire1"))
@@ -114,7 +112,7 @@ public class Model : MonoBehaviour {
             translate = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.T) || Input.GetButtonDown("Fire2"))
+        if (Input.GetKeyUp(KeyCode.T) || Input.GetButtonUp("Fire2"))
             translate = false;
 
         if(translate)
