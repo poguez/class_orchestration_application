@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Model : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class Model : MonoBehaviour {
     public GameObject[] objects = new GameObject[numModels];
     public GameObject[] previewModels = new GameObject[numModels];
 
+    public EventSystem eventSystem;
 
     // TODO: retrieve ID from database
     public int modelID;
@@ -74,13 +76,19 @@ public class Model : MonoBehaviour {
             modelID = 2;
             resetObject();
         }
-            
+
         // TODO: if interaction is enabled
         if (Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("Fire3"))
+        {
             scale = true;
+            eventSystem.sendNavigationEvents = false;
+        }
 
         if (Input.GetKeyUp(KeyCode.S) || Input.GetButtonUp("Fire3"))
+        {
             scale = false;
+            eventSystem.sendNavigationEvents = true;
+        }
 
         if (scale)
         {
@@ -89,10 +97,16 @@ public class Model : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("Fire1"))
+        {
             rotate = true;
+            eventSystem.sendNavigationEvents = false;
+        }
 
         if (Input.GetKeyUp(KeyCode.R) || Input.GetButtonUp("Fire1"))
+        {
             rotate = false;
+            eventSystem.sendNavigationEvents = true;
+        }
 
         if (rotate)
         {
@@ -102,10 +116,14 @@ public class Model : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.T) || Input.GetButtonDown("Fire2")) {
             translate = true;
+            eventSystem.sendNavigationEvents = false;
         }
 
         if (Input.GetKeyUp(KeyCode.T) || Input.GetButtonUp("Fire2"))
+        {
             translate = false;
+            eventSystem.sendNavigationEvents = true;
+        }
 
         if(translate)
         {
