@@ -38,7 +38,8 @@ public class UsersApi : MonoBehaviour {
 
 		// Examples
 		//getUsers ().ToString ();
-		//createUser ().ToString();
+		createUser ().ToString();
+		createUser ("professor").ToString();
 		//changeUserTeam(20, 14);
 	}
 	
@@ -53,10 +54,14 @@ public class UsersApi : MonoBehaviour {
 		return reponse.downloadHandler.text;
 	}
 
-	// Create a user
-	public string createUser(){
+	// Create a user (userType: "professor" or "student by default")
+	public string createUser(string userType = "student"){
+		string isAdmin = "false";
+		if (userType == "professor") {
+			isAdmin = "true";
+		}
 		string put_url = base_url + "/v1/user/new";
-		string requestBodyJsonString = "{\"name\": \"Google Cardboard User\", \"password\": \"new\", \"isAdmin\": false, \"teamId\": 1 }";
+		string requestBodyJsonString = "{\"name\": \"Google Cardboard User\", \"password\": \"new\", \"isAdmin\":" + isAdmin + ", \"teamId\": 1 }";
 		UnityWebRequest reponse = myclient.POST(put_url, requestBodyJsonString, createUserCallback);
 		return reponse.downloadHandler.text;
 	}
