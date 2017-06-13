@@ -109,7 +109,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 495}
   m_MaxSize: {x: 14004, y: 14045}
   vertical: 0
-  controlID: 974
+  controlID: 1463
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -133,7 +133,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 495}
   m_MaxSize: {x: 10002, y: 14045}
   vertical: 1
-  controlID: 975
+  controlID: 1464
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 224}
   m_MaxSize: {x: 8006, y: 4024}
   vertical: 0
-  controlID: 976
+  controlID: 1434
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -366,8 +366,8 @@ MonoBehaviour:
     height: 504
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 022c0000
-    m_LastClickedID: 11266
+    m_SelectedIDs: 
+    m_LastClickedID: 0
     m_ExpandedIDs: e0fbffffe2fbffff00000000c6290000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -452,9 +452,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -0.27207133, y: 0.30685222, z: -0.092006244, w: -0.9073884}
   m_Size:
-    m_Target: 726.36206
+    m_Target: 825.02814
     speed: 2
-    m_Value: 726.36206
+    m_Value: 825.02814
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -574,18 +574,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts
+    - Assets/Jurassic Pack/-World
   m_ViewMode: 1
-  m_StartGridSize: 64
+  m_StartGridSize: 67
   m_LastFolders:
-  - Assets/Scripts
-  m_LastFoldersGridSize: -1
+  - Assets/Jurassic Pack/-World/Textures
+  m_LastFoldersGridSize: 67
   m_LastProjectPath: D:\Lou\class_orchestration_application\Class_Orchestration_App
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 95}
-    m_SelectedIDs: 8e270000
-    m_LastClickedID: 10126
+    scrollPos: {x: 0, y: 64}
+    m_SelectedIDs: 94260000
+    m_LastClickedID: 9876
     m_ExpandedIDs: 00000000d82500002426000094260000f626000002270000ce27000060280000f028000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -614,7 +614,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d82500002426000094260000f626000002270000ce27000060280000f028000000ca9a3bffffff7f
+    m_ExpandedIDs: 00000000d825000024260000f626000002270000ce27000060280000f028000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -641,7 +641,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 1825000014250000000000008a2b0000b22c00009e2c0000cc260000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -667,7 +667,7 @@ MonoBehaviour:
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
     m_ScrollPosition: {x: 0, y: 0}
-    m_GridSize: 64
+    m_GridSize: 67
   m_DirectoriesAreaWidth: 257
 --- !u!114 &18
 MonoBehaviour:
