@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Model : MonoBehaviour {
 
-    public GameObject[] objects = new GameObject[5];
-    public GameObject[] previewModels = new GameObject[5];
+
+    const int numModels = 3;
+
+    public GameObject[] objects = new GameObject[numModels];
+    public GameObject[] previewModels = new GameObject[numModels];
+
 
     // TODO: retrieve ID from database
     public int modelID;
@@ -32,13 +36,13 @@ public class Model : MonoBehaviour {
     public void leftArrow()
     {
         if (modelID == 0)
-            modelID = 5;
-        modelID = (modelID - 1) % 5;
+            modelID = numModels;
+        modelID = (modelID - 1) % numModels;
         previewObject();
     }
     public void rightArrow()
     {
-        modelID = (modelID + 1) % 5;
+        modelID = (modelID + 1) % numModels;
         previewObject();
     }
 
@@ -68,18 +72,6 @@ public class Model : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
             modelID = 2;
-            resetObject();
-        }
-            
-        if (Input.GetKeyDown(KeyCode.Keypad3))
-        {
-            modelID = 3;
-            resetObject();
-        }
-            
-        if (Input.GetKeyDown(KeyCode.Keypad4))
-        {
-            modelID = 4;
             resetObject();
         }
             
