@@ -35,9 +35,9 @@ public class UsersApi : MonoBehaviour {
 
 	void Start () {
 		myclient = (new GameObject("RESTclient")).AddComponent<RestClient>();
-
 		getUsers ().ToString ();
 		createUser ().ToString();
+		changeUserTeam(20, 14);
 	}
 	
 	void Update () {
@@ -55,6 +55,14 @@ public class UsersApi : MonoBehaviour {
 	public string createUser(){
 		string put_url = base_url + "/v1/user/new";
 		string requestBodyJsonString = "{\"name\": \"Google Cardboard User\", \"password\": \"new\", \"isAdmin\": false, \"teamId\": 1 }";
+		UnityWebRequest reponse = myclient.POST(put_url, requestBodyJsonString, createUserCallback);
+		return reponse.downloadHandler.text;
+	}
+
+	// Change the team of a User.
+	public string changeUserTeam(int userId, int teamId){
+		string put_url = base_url + "/v1/user/"+ userId ;
+		string requestBodyJsonString = "{\"teamId\":" +teamId + "}";
 		UnityWebRequest reponse = myclient.POST(put_url, requestBodyJsonString, createUserCallback);
 		return reponse.downloadHandler.text;
 	}
