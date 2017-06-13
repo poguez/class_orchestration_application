@@ -20,6 +20,7 @@
 /Users/Valentin/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Assembly-CSharp.dll
 /Users/Valentin/class_orchestration_application/Class_Orchestration_App/obj/Debug/Assembly-CSharp.dll
 /Users/Valentin/class_orchestration_application/Class_Orchestration_App/obj/Debug/Assembly-CSharp.dll.mdb
+<<<<<<< HEAD
 /Users/poguez/development/kaist/augmented_reality/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Assembly-CSharp.dll.mdb
 /Users/poguez/development/kaist/augmented_reality/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Assembly-CSharp.dll
 /Users/poguez/development/kaist/augmented_reality/class_orchestration_application/Class_Orchestration_App/obj/Debug/Assembly-CSharp.dll
@@ -45,3 +46,27 @@
 /Users/poguez/development/kaist/augmented_reality/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Mono.Cecil.Mdb.dll
 /Users/poguez/development/kaist/augmented_reality/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Assembly-CSharp-firstpass.dll
 /Users/poguez/development/kaist/augmented_reality/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Assembly-CSharp-firstpass.dll.mdb
+=======
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/obj/Debug/Assembly-CSharp.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/obj/Debug/Assembly-CSharp.dll.mdb
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/UnityEngine.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/UnityEditor.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/UnityEngine.Analytics.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/UnityEngine.PlaymodeTestsRunner.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/UnityEngine.Networking.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/UnityEngine.UI.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/UnityEngine.HoloLens.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/UnityEngine.VR.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Vuforia.UnityExtensions.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Mono.Cecil.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Unity.SerializationLogic.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Unity.DataContract.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/ICSharpCode.NRefactory.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Unity.UNetWeaver.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Unity.UNetWeaver.dll.mdb
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Unity.CecilTools.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Mono.Cecil.Pdb.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Mono.Cecil.Mdb.dll
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Assembly-CSharp.dll.mdb
+/Users/Valentin/github-project/class_orchestration_application/Class_Orchestration_App/Temp/bin/Debug/Assembly-CSharp.dll
+>>>>>>> d4efd747560f53abe08857d023ae21a5512c9206

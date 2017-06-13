@@ -35,9 +35,11 @@ public class UsersApi : MonoBehaviour {
 
 	void Start () {
 		myclient = (new GameObject("RESTclient")).AddComponent<RestClient>();
-		getUsers ().ToString ();
-		createUser ().ToString();
-		changeUserTeam(20, 14);
+
+		// Examples
+		//getUsers ().ToString ();
+		//createUser ().ToString();
+		//changeUserTeam(20, 14);
 	}
 	
 	void Update () {

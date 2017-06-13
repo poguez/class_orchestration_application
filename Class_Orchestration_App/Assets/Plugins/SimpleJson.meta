@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Class_Orchestration_App/Assets/Plugins/SimpleJson.meta
 guid: eac7155a7d8e7440d901c011d2137912
 folderAsset: yes
 timeCreated: 1497358972
+=======
+guid: f5b8d91c72707094da46ef148cddda26
+folderAsset: yes
+timeCreated: 1497346936
+>>>>>>> d4efd747560f53abe08857d023ae21a5512c9206:Class_Orchestration_App/Assets/Standard Assets/Effects/ImageEffects/Scripts.meta
 licenseType: Free
 DefaultImporter:
   userData: 
