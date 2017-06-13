@@ -1,0 +1,48 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Networking;
+
+
+public class ClassOrchestration : MonoBehaviour {
+	private static string url_endpoint = WWW.EscapeURL("http://miri.noedominguez.com:9000/v1/user/");
+	bool done = false;
+
+
+	// Use this for initialization
+	void Start () {
+
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		//WWW www = new WWW (url_endpoint);
+		UnityWebRequest www = UnityWebRequest.Get("http://miri.noedominguez.com:9000/v1/user/");
+		while (!done) {
+			StartCoroutine (WaitForRequest (www));
+		}
+	}
+
+	IEnumerator WaitForRequest(UnityWebRequest www)
+	{
+		yield return www.Send ();
+
+		if (www.isDone)
+		{
+			done = true;
+			Debug.Log("WWW Ok!: " + www.downloadHandler.text);
+		} else {
+			Debug.Log("Not yet done");
+		}    
+	}
+
+	void printToLog(bool result) {
+		string meh = "Sí llegó";
+		if (result) {
+			Debug.Log (meh);
+		} else {
+			meh = "No llegó";
+			Debug.Log (meh);
+		}
+	}
+}
