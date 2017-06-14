@@ -58,31 +58,6 @@ public class Model : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-<<<<<<< HEAD
-=======
-		// guided exlporation
-		Debug.Log ("MOOOOOOOOOOOOOOODEL ID");
-		Debug.Log (modelID);
-        // TODO: if model selection is enabled
-        if (Input.GetKeyDown(KeyCode.Keypad0))
-        {
-            modelID = 0;
-            resetObject();
-        }
-            
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-        {
-            modelID = 1;
-            resetObject();
-        }
-            
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            modelID = 2;
-            resetObject();
-        }
-
->>>>>>> 3d8a48f6ba09a4f970d5fc8685f181ff2009926a
         // TODO: if interaction is enabled
         if (Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("Fire3"))
         {
