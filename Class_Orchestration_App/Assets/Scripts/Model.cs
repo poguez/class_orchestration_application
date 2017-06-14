@@ -34,7 +34,7 @@ public class Model : MonoBehaviour {
         //model.transform.localPosition = new Vector3(0.0f, 0.0f, 10.0f);
 	}
 
-    // TODO: handle input
+    // TEACHER: select model preview
     public void leftArrow()
     {
         if (modelID == 0)
@@ -56,28 +56,35 @@ public class Model : MonoBehaviour {
         //preview.transform.localPosition = new Vector3(0.0f, 0.0f, 10.0f);
     }
 
+    // TEACHER: select model
+    public void resetObject()
+    {
+        preview.SetActive(false);
+        model.SetActive(false);
+        //model.transform.localPosition = new Vector3(0.0f, 0.1f, 0.0f);
+        model = objects[modelID];
+        //model.transform.localPosition = new Vector3(0.0f, 0.1f, 0.0f);
+        model.SetActive(true);
+    }
+
+    // STUDENT: pass the model ID from the server to the client
+    public void setModelID(int id)
+    {
+        modelID = id;
+    }
+
     // Update is called once per frame
     void Update() {
-        // TODO: if model selection is enabled
-        if (Input.GetKeyDown(KeyCode.Keypad0))
-        {
-            modelID = 0;
-            resetObject();
-        }
-            
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-        {
-            modelID = 1;
-            resetObject();
-        }
-            
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            modelID = 2;
-            resetObject();
-        }
-
-        // TODO: if interaction is enabled
+        /**
+         * STUDENT: check if permission if given
+         * exploration mode
+         * 
+         * 0 - NO permission
+         * 1 - individual permission
+         * 2 - group permission:    first retrieve current state from server
+         *                          second process user input
+         *
+        **/
         if (Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("Fire3"))
         {
             scale = true;
@@ -130,20 +137,6 @@ public class Model : MonoBehaviour {
             model.transform.Translate((Vector3.up * Input.GetAxis("Mouse Y") + Vector3.right * Input.GetAxis("Mouse X")) * Time.deltaTime * transSpeed);
             model.transform.Translate((Vector3.up * Input.GetAxis("Vertical") + Vector3.right * Input.GetAxis("Horizontal")) * Time.deltaTime * transSpeed);
         }
-
-        // TODO: synchronize transformation with database
-
-        // TODO: retrieve transformation update from database
-        // scaling, rotation, translation
     }
 
-    public void resetObject()
-    {
-        preview.SetActive(false);
-        model.SetActive(false);
-        //model.transform.localPosition = new Vector3(0.0f, 0.1f, 0.0f);
-        model = objects[modelID];
-        //model.transform.localPosition = new Vector3(0.0f, 0.1f, 0.0f);
-        model.SetActive(true);
-    }
 }

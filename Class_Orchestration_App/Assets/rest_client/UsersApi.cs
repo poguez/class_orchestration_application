@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 using ClassOrchestrationApi;
 using SimpleJSON;
+
 
 //
 // Unity Web Request
@@ -24,7 +26,8 @@ public class UsersApi : MonoBehaviour {
 	static Exploration myExploration = new Exploration();
 	static ExplorationObject myExplorationObject = new ExplorationObject();
 
-
+    public Text teamID;
+    public GameObject model;
 
 	/*
 	 * 
@@ -41,7 +44,8 @@ public class UsersApi : MonoBehaviour {
 		public int teamId;
 
 		public string toString(){
-			return "user_id: " + user_id + ", " + "name: " + username + ", " + "isAdmin: " + isAdmin + ", " + "teamId: " + teamId;
+			return "user_id: " + user_id + ", " + "name: " + username + ", " + "isAdmin: " + 
+                isAdmin + ", " + "teamId: " + teamId;
 		}
 	}
 
@@ -52,7 +56,8 @@ public class UsersApi : MonoBehaviour {
 		public int teacherId;
 		public int explorationObjectId;
 		public string toString(){
-			return "id: "+ explorationId + ", " + "teacherId: " + teacherId + ", " + "explorationObjectId: " + explorationObjectId;
+			return "id: "+ explorationId + ", " + "teacherId: " + teacherId + ", " + 
+                "explorationObjectId: " + explorationObjectId;
 		}
 	}
 
@@ -63,7 +68,8 @@ public class UsersApi : MonoBehaviour {
 		public string objectState;
 		public string modelName; // "dinosaur", "desk" or "dna"
 		public string toString(){
-			return "id: " + explorationObjectId + ", " + "objectState: " + objectState + "modelName: " + modelName;
+			return "id: " + explorationObjectId + ", " + "objectState: " + objectState + 
+                "modelName: " + modelName;
 		}
 	}
 
@@ -113,23 +119,26 @@ public class UsersApi : MonoBehaviour {
 	}
 
 	// Create a user (userType: "professor" or "student by default")
-	public string createUser(string userType = "student"){
+	public void createUser(string userType = "student"){
 		string isAdmin = "false";
 		if (userType == "professor") {
 			isAdmin = "true";
 		}
 		string put_url = base_url + "/v1/user/new";
-		string requestBodyJsonString = "{\"name\": \"Google Cardboard User\", \"password\": \"new\", \"isAdmin\":" + isAdmin + ", \"teamId\": 1 }";
+		string requestBodyJsonString = 
+            "{\"name\": \"Google Cardboard User\", \"password\": \"new\", \"isAdmin\":" + 
+            isAdmin + ", \"teamId\": 1 }";
 		UnityWebRequest reponse = myclient.POST(put_url, requestBodyJsonString, createUserCallback);
-		return reponse.downloadHandler.text;
+        return;// reponse.downloadHandler.text;
 	}
 
 	// Change the team of a User.
-	public string changeUserTeam(int userId, int teamId){
-		string put_url = base_url + "/v1/user/"+ userId ;
-		string requestBodyJsonString = "{\"teamId\":" +teamId + "}";
+    // STUDENT
+	public void changeUserTeam(){
+		string put_url = base_url + "/v1/user/"+ myUser.user_id ;
+		string requestBodyJsonString = "{\"teamId\":" + teamID.text + "}";
 		UnityWebRequest reponse = myclient.POST(put_url, requestBodyJsonString, createUserCallback);
-		return reponse.downloadHandler.text;
+        return;// reponse.downloadHandler.text;
 	}
 
 	/*
@@ -137,6 +146,7 @@ public class UsersApi : MonoBehaviour {
 	*/
 
 	// Create a Exploration
+    // TEACHER
 	public string createExploration(int teacherId = -1, int explorationObjectId = -1){
 		string teacherIdParam = teacherId.ToString();
 		string explorationObjectIdParam = explorationObjectId.ToString();
@@ -150,7 +160,8 @@ public class UsersApi : MonoBehaviour {
 		}
 
 		string put_url = base_url + "/v1/exploration/new";
-		string requestBodyJsonString = "{\"teacherId\":" + teacherIdParam + ", " + "\"explorationObjectId\" :" +  explorationObjectIdParam + "}";
+		string requestBodyJsonString = "{\"teacherId\":" + teacherIdParam + ", " + 
+            "\"explorationObjectId\" :" +  explorationObjectIdParam + "}";
 		UnityWebRequest reponse = myclient.POST(put_url, requestBodyJsonString, createExplorationCallback);
 		return reponse.downloadHandler.text;
 	}
@@ -160,14 +171,33 @@ public class UsersApi : MonoBehaviour {
 	* 
 	*/
 
-	public string createExplorationObject(string objectState = "", string modelName = "dinosaur"){
-		// modelName: "dinosaur", "desk" or "dna"
+    // TEACHER
+	public void createExplorationObject(string objectState = ""){
+        int id = model.GetComponent<Model>().modelID;
+
+        // modelName: "dinosaur", "desk" or "dna"
+        string modelName;
+        if (id == 0)
+        {
+            modelName = "desk";
+        }
+        else if (id == 1)
+        {
+            modelName = "dinosaur";
+        }
+        else
+        {
+            modelName = "dna";
+
+        }        
+
 		string objectStateParam = objectState;
 		string modelNameParam = modelName;
 		string put_url = base_url + "/v1/exploration-object/new";
-		string requestBodyJsonString = "{\"objectState\": \"" + objectStateParam + "\" , " + "\"modelName\" : \"" +  modelNameParam + "\" }";
+		string requestBodyJsonString = "{\"objectState\": \"" + objectStateParam + "\" , " + 
+            "\"modelName\" : \"" +  modelNameParam + "\" }";
 		UnityWebRequest reponse = myclient.POST(put_url, requestBodyJsonString, createExplorationObjectCallback);
-		return reponse.downloadHandler.text;
+        return;// reponse.downloadHandler.text;
 	}
 
 
