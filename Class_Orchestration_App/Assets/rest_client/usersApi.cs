@@ -147,6 +147,7 @@ public class UsersApi : MonoBehaviour {
         {
             createExploration(myUser.user_id);
             exploration = true;
+            model.GetComponent<Model>().student = false;
         } else if (isStudent && !exploration)
         {
             // get newest entry for exploration
@@ -186,11 +187,11 @@ public class UsersApi : MonoBehaviour {
             (myExplorationObject.modelName.Equals(modelName)))
         {
             string parameters = "";
-            parameters = model.GetComponent<Model>().model.transform.position.ToString();
+            parameters = model.GetComponent<Model>().model.transform.position.ToString("F4");
             parameters += ";";
-            parameters += model.GetComponent<Model>().model.transform.rotation.ToString();
+            parameters += model.GetComponent<Model>().model.transform.rotation.ToString("F4");
             parameters += ";";
-            parameters += model.GetComponent<Model>().model.transform.localScale.ToString();
+            parameters += model.GetComponent<Model>().model.transform.localScale.ToString("F4");
 
             updateObject(myExplorationObject.explorationObjectId, parameters);
         }
@@ -258,6 +259,7 @@ public class UsersApi : MonoBehaviour {
         explorationModeInfo.GetComponentInChildren<Text>().text = mode;
         // guided
         if (mode.Equals("Guided")) {
+            model.GetComponent<Model>().gameMode = 0;
             explorationModeInfo.GetComponent<Image>().color =
                 new Color32(0, 100, 255, 100);
             updateExplorationMode(myExploration.explorationId, 0);
@@ -265,6 +267,7 @@ public class UsersApi : MonoBehaviour {
         // individual
         else if (mode.Equals("Indiv."))
         {
+            model.GetComponent<Model>().gameMode = 1;
             explorationModeInfo.GetComponent<Image>().color =
                 new Color32(255, 0, 100, 100);
             updateExplorationMode(myExploration.explorationId, 1);
@@ -272,6 +275,7 @@ public class UsersApi : MonoBehaviour {
         // group
         else
         {
+            model.GetComponent<Model>().gameMode = 2;
             explorationModeInfo.GetComponent<Image>().color =
                 new Color32(100, 255, 0, 100);
             updateExplorationMode(myExploration.explorationId, 2);

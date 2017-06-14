@@ -26,6 +26,9 @@ public class Model : MonoBehaviour {
     public float rotSpeed = 100.0f;
     public float transSpeed = 100.0f;
 
+    public bool student = true;
+    public int gameMode = 0;
+
 	// Use this for initialization
 	void Start () {
         model = objects[modelID];
@@ -59,20 +62,25 @@ public class Model : MonoBehaviour {
 
     public void setPosition(Vector3 position)
     {
-        model.transform.position.Set(
-                position.x, position.y, position.z);
+        Debug.Log("Position");
+        Debug.Log(position.ToString());
+        model.transform.position = position;
+        //model.transform.localPosition = position;
     }
 
     public void setRotation(Quaternion rotation)
     {
-        model.transform.rotation.Set(
-                rotation.x, rotation.y, rotation.z, rotation.w);
+        Debug.Log("Rotation");
+        Debug.Log(rotation.ToString());
+        model.transform.rotation = rotation;
+        //model.transform.localRotation = rotation;
     }
 
     public void setScale(Vector3 scale)
     {
-        model.transform.localScale.Set(
-                scale.x, scale.y, scale.z);
+        Debug.Log("Scale");
+        Debug.Log(scale.ToString());
+        model.transform.localScale = scale;
     }
 
     public void previewObject()
@@ -98,45 +106,49 @@ public class Model : MonoBehaviour {
             eventSystem.sendNavigationEvents = true;
         }
 
-        if (scale)
+        //if (!student && gameMode == 0)
         {
-            model.transform.localScale = model.transform.localScale + new Vector3(1.0f, 1.0f, 1.0f) * Input.GetAxis("Mouse X") * Time.deltaTime;
-            model.transform.localScale = model.transform.localScale + new Vector3(1.0f, 1.0f, 1.0f) * Input.GetAxis("Horizontal") * Time.deltaTime;
-        }
+            if (scale)
+            {
+                model.transform.localScale = model.transform.localScale + new Vector3(1.0f, 1.0f, 1.0f) * Input.GetAxis("Mouse X") * Time.deltaTime;
+                model.transform.localScale = model.transform.localScale + new Vector3(1.0f, 1.0f, 1.0f) * Input.GetAxis("Horizontal") * Time.deltaTime;
+            }
 
-        if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("Fire1"))
-        {
-            rotate = true;
-            eventSystem.sendNavigationEvents = false;
-        }
+            if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("Fire1"))
+            {
+                rotate = true;
+                eventSystem.sendNavigationEvents = false;
+            }
 
-        if (Input.GetKeyUp(KeyCode.R) || Input.GetButtonUp("Fire1"))
-        {
-            rotate = false;
-            eventSystem.sendNavigationEvents = true;
-        }
+            if (Input.GetKeyUp(KeyCode.R) || Input.GetButtonUp("Fire1"))
+            {
+                rotate = false;
+                eventSystem.sendNavigationEvents = true;
+            }
 
-        if (rotate)
-        {
-            model.transform.Rotate(new Vector3(Input.GetAxis("Mouse Y"), -1 * Input.GetAxis("Mouse X"), 0) * Time.deltaTime * rotSpeed);
-            model.transform.Rotate(new Vector3(Input.GetAxis("Vertical"), -1 * Input.GetAxis("Horizontal"), 0) * Time.deltaTime * rotSpeed);
-        }
+            if (rotate)
+            {
+                model.transform.Rotate(new Vector3(Input.GetAxis("Mouse Y"), -1 * Input.GetAxis("Mouse X"), 0) * Time.deltaTime * rotSpeed);
+                model.transform.Rotate(new Vector3(Input.GetAxis("Vertical"), -1 * Input.GetAxis("Horizontal"), 0) * Time.deltaTime * rotSpeed);
+            }
 
-        if (Input.GetKeyDown(KeyCode.T) || Input.GetButtonDown("Fire2")) {
-            translate = true;
-            eventSystem.sendNavigationEvents = false;
-        }
+            if (Input.GetKeyDown(KeyCode.T) || Input.GetButtonDown("Fire2"))
+            {
+                translate = true;
+                eventSystem.sendNavigationEvents = false;
+            }
 
-        if (Input.GetKeyUp(KeyCode.T) || Input.GetButtonUp("Fire2"))
-        {
-            translate = false;
-            eventSystem.sendNavigationEvents = true;
-        }
+            if (Input.GetKeyUp(KeyCode.T) || Input.GetButtonUp("Fire2"))
+            {
+                translate = false;
+                eventSystem.sendNavigationEvents = true;
+            }
 
-        if(translate)
-        {
-            model.transform.Translate((Vector3.up * Input.GetAxis("Mouse Y") + Vector3.right * Input.GetAxis("Mouse X")) * Time.deltaTime * transSpeed);
-            model.transform.Translate((Vector3.up * Input.GetAxis("Vertical") + Vector3.right * Input.GetAxis("Horizontal")) * Time.deltaTime * transSpeed);
+            if (translate)
+            {
+                model.transform.Translate((Vector3.up * Input.GetAxis("Mouse Y") + Vector3.right * Input.GetAxis("Mouse X")) * Time.deltaTime * transSpeed);
+                model.transform.Translate((Vector3.up * Input.GetAxis("Vertical") + Vector3.right * Input.GetAxis("Horizontal")) * Time.deltaTime * transSpeed);
+            }
         }
     }
 
