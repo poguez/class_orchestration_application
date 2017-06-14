@@ -187,7 +187,13 @@ public class UsersApi : MonoBehaviour {
         // group members update group object
 
         // guided exlporation
-        if (myExploration.explorationMode == 0 && !myUser.isAdmin && exploration)
+		Debug.Log ("ñwlekrnqñlweknfñlqwkenfñqlwkefkñewnñflqknweñflknjñb");
+		Debug.Log ("It is called");
+		Debug.Log (myExploration.explorationMode);
+		Debug.Log (exploration);
+
+
+        if (myExploration.explorationMode == 0 && !myUser.isAdmin)
         {
             model.GetComponent<Model>().modelID = myModelType;
             model.GetComponent<Model>().model = model.GetComponent<Model>().objects[myModelType];

@@ -58,6 +58,9 @@ public class Model : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+		// guided exlporation
+		Debug.Log ("MOOOOOOOOOOOOOOODEL ID");
+		Debug.Log (modelID);
         // TODO: if model selection is enabled
         if (Input.GetKeyDown(KeyCode.Keypad0))
         {
