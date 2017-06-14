@@ -159,7 +159,6 @@ public class UsersApi : MonoBehaviour {
             teacherExplorationObject = true;
             createExplorationObject();
             currentObjectId = myExplorationObject.explorationObjectId;
-
         }
 
         if (exploration && teacherExplorationObject && (oldObjectId != currentObjectId))
@@ -167,12 +166,24 @@ public class UsersApi : MonoBehaviour {
             oldObjectId = currentObjectId;
             updateExplorationObject(myExploration.explorationId, myExplorationObject.explorationObjectId);
             createExplorationEvent("setExplorationObject", myExplorationObject.explorationObjectId.ToString());
-
         }
 
         // teacher updates teacher's object
 
-        if (myUser.isAdmin && (myExplorationObject.explorationObjectId != -1))
+        string modelName = "";
+        if (model.GetComponent<Model>().modelID == 0)
+        {
+            modelName = "desk";
+        } else if (model.GetComponent<Model>().modelID == 1)
+        {
+            modelName = "dinosaur";
+        } else
+        {
+            modelName = "dna";
+        }
+
+        if (myUser.isAdmin && teacherExplorationObject &&
+            (myExplorationObject.modelName.Equals(modelName)))
         {
             string parameters = "";
             parameters = model.GetComponent<Model>().model.transform.position.ToString();
@@ -186,7 +197,7 @@ public class UsersApi : MonoBehaviour {
 
         // group members update group object
 
-        // guided exlporation
+        // guided exploration
         if (myExploration.explorationMode == 0 && !myUser.isAdmin && exploration)
         {
             model.GetComponent<Model>().modelID = myModelType;
@@ -389,15 +400,29 @@ public class UsersApi : MonoBehaviour {
 		{
 			modelName = "dna";
 
-		}        
+		}
 
-		string objectStateParam = objectState;
-		string modelNameParam = modelName;
-		string put_url = base_url + "/v1/exploration-object/new";
-		string requestBodyJsonString = "{\"objectState\": \"" + objectStateParam + "\" , " + 
-			"\"modelName\" : \"" +  modelNameParam + "\" }";
-		UnityWebRequest reponse = myclient.POST(put_url, requestBodyJsonString, createExplorationObjectCallback);
-        return;// reponse.downloadHandler.text;
+        if (myExploration.explorationObjectId != myExplorationObject.explorationObjectId)
+        {
+            Debug.Log("Create object");
+            string objectStateParam = objectState;
+            string modelNameParam = modelName;
+            string put_url = base_url + "/v1/exploration-object/new";
+            string requestBodyJsonString = "{\"objectState\": \"" + objectStateParam + "\" , " +
+                "\"modelName\" : \"" + modelNameParam + "\" }";
+            UnityWebRequest reponse = myclient.POST(put_url, requestBodyJsonString, createExplorationObjectCallback);
+            return;// reponse.downloadHandler.text;
+        } else
+        {
+            Debug.Log("Update object");
+            string objectStateParam = objectState;
+            string modelNameParam = modelName;
+            string put_url = base_url + "/v1/exploration-object/" + myExplorationObject.explorationObjectId;
+            string requestBodyJsonString = "{\"objectState\": \"" + objectStateParam + "\" , " +
+                "\"modelName\" : \"" + modelNameParam + "\" }";
+            UnityWebRequest reponse = myclient.POST(put_url, requestBodyJsonString, createExplorationObjectCallback);
+            return;// reponse.downloadHandler.text;
+        }
 	}
 
 	/*
@@ -449,7 +474,7 @@ public class UsersApi : MonoBehaviour {
 	public static void CreateExplorationObjectCallback(UnityWebRequest www)
 	{	
 		var result = JSON.Parse(www.downloadHandler.text);
-		myExplorationObject.explorationObjectId = result ["id"];
+		myExplorationObject.explorationObjectId = result ["id"].AsInt;
 		myExplorationObject.objectState = result ["objectState"];
 		myExplorationObject.modelName = result ["modelName"];
 		Debug.Log ("ExplorationObject object print:");

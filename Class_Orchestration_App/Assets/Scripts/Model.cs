@@ -58,25 +58,6 @@ public class Model : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        // TODO: if model selection is enabled
-        if (Input.GetKeyDown(KeyCode.Keypad0))
-        {
-            modelID = 0;
-            resetObject();
-        }
-            
-        if (Input.GetKeyDown(KeyCode.Keypad1))
-        {
-            modelID = 1;
-            resetObject();
-        }
-            
-        if (Input.GetKeyDown(KeyCode.Keypad2))
-        {
-            modelID = 2;
-            resetObject();
-        }
-
         // TODO: if interaction is enabled
         if (Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("Fire3"))
         {
@@ -130,11 +111,6 @@ public class Model : MonoBehaviour {
             model.transform.Translate((Vector3.up * Input.GetAxis("Mouse Y") + Vector3.right * Input.GetAxis("Mouse X")) * Time.deltaTime * transSpeed);
             model.transform.Translate((Vector3.up * Input.GetAxis("Vertical") + Vector3.right * Input.GetAxis("Horizontal")) * Time.deltaTime * transSpeed);
         }
-
-        // TODO: synchronize transformation with database
-
-        // TODO: retrieve transformation update from database
-        // scaling, rotation, translation
     }
 
     public void resetObject()

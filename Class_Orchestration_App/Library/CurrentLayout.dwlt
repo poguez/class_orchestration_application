@@ -336,7 +336,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: e0250000
     m_LastClickedID: 9696
-    m_ExpandedIDs: 00000000ec250000362600000a27000018270000e22700007628000006290000
+    m_ExpandedIDs: 00000000e02500002a260000fe2600000c270000d62700006a280000fa280000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -364,7 +364,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ec250000362600000a27000018270000e22700007628000006290000
+    m_ExpandedIDs: 00000000e02500002a260000fe2600000c270000d62700006a280000fa280000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -445,7 +445,7 @@ MonoBehaviour:
     y: 92
     width: 291
     height: 806
-  m_ScrollPosition: {x: 0, y: 0}
+  m_ScrollPosition: {x: 0, y: 530.9551}
   m_InspectorMode: 0
   m_PreviewResizer:
     m_CachedPref: 160
@@ -480,25 +480,25 @@ MonoBehaviour:
     height: 479
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 9e2c0000
-    m_LastClickedID: 11422
-    m_ExpandedIDs: e0fbffff00000000cc290000
+    m_SelectedIDs: f6290000
+    m_LastClickedID: 10742
+    m_ExpandedIDs: e2fbffff00000000c6290000da2900003c2a00004e2a00000c2b0000aa2b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Client
+      m_OriginalName: Client
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 11416
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 0
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 4}
     m_SearchString: 
   m_ExpandedScenes:
   - main
@@ -532,7 +532,7 @@ MonoBehaviour:
     width: 859
     height: 479
   m_SceneLighting: 1
-  lastFramingTime: 34.30154487485499
+  lastFramingTime: 4913.669011708222
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
