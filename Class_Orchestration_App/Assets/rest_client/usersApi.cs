@@ -22,6 +22,7 @@ public class UsersApi : MonoBehaviour {
     ClassOrchestrationApi.ActionWWW createExplorationObjectCallback = CreateExplorationObjectCallback;
     ClassOrchestrationApi.ActionWWW createEventCallback = CreateEventCallback;
     ClassOrchestrationApi.ActionWWW getExplorationObjectStateCallback = GetExplorationObjectStateCallback;
+    ClassOrchestrationApi.ActionWWW getEventCallback = GetEventCallback;
     
     string base_url = "http://miri.noedominguez.com:9000";
     //string base_url = "http://localhost:9000";
@@ -35,6 +36,7 @@ public class UsersApi : MonoBehaviour {
     static Vector3 myPosition;
     static Quaternion myRotation;
     static Vector3 myScale;
+    static int myModelType;
 
     bool isStudent = false;
     bool exploration = false;
@@ -95,7 +97,7 @@ public class UsersApi : MonoBehaviour {
     public class ExplorationEventManager
     {
         public int newestEventId;
-        public int lastProcessedEventId;
+        public int lastProcessedEventId = -1;
         public Queue<UsersApi.ExplorationEvent> awaitingProcessEventsQueue = new Queue<UsersApi.ExplorationEvent>();
         public void insertToQueue(UsersApi.ExplorationEvent eventForQueue) {
             myExplorationEventManager.awaitingProcessEventsQueue.Enqueue(eventForQueue);
@@ -184,6 +186,9 @@ public class UsersApi : MonoBehaviour {
         // guided exlporation
         if (myExploration.explorationMode == 0 && !myUser.isAdmin && exploration)
         {
+            model.GetComponent<Model>().modelID = myModelType;
+            model.GetComponent<Model>().model = model.GetComponent<Model>().objects[myModelType];
+
             getExplorationObjectState(myExploration.explorationObjectId);
             model.GetComponent<Model>().model.transform.position.Set(
                 myPosition.x, myPosition.y, myPosition.z);
@@ -193,6 +198,18 @@ public class UsersApi : MonoBehaviour {
                 myScale.x, myScale.y, myScale.z);
         }
 
+
+        if (myExplorationEventManager.awaitingProcessEventsQueue.Count > 0)
+        {
+            ExplorationEvent ev = myExplorationEventManager.awaitingProcessEventsQueue.Dequeue();
+            if (ev.name.Equals("setExplorationObject"))
+            {
+
+            } else
+            {
+
+            }
+        }
 	}
 
     /*
@@ -206,6 +223,13 @@ public class UsersApi : MonoBehaviour {
     /*
 	*	Users and Groups Api calls
 	*/
+
+    // get events
+    public void getEvents()
+    {
+        string put_url = base_url + "/v1/exploration-event/";
+        UnityWebRequest reponse = myclient.GET(put_url, GetEventCallback);
+    }
 
     // get object state
     public string getExplorationObjectState(int objectId)
@@ -489,5 +513,39 @@ public class UsersApi : MonoBehaviour {
         Vector3 scale;
         scale = new Vector3(float.Parse(sca[0]), float.Parse(sca[1]), float.Parse(sca[2]));
         myScale = scale;
+
+        if (result["modelName"].Equals("desk"))
+        {
+            myModelType = 0;
+        } else if (result["modelName"].Equals("dinosaur"))
+        {
+            myModelType = 1;
+        } else
+        {
+            myModelType = 2;
+        }
+    }
+
+    public static void GetEventCallback(UnityWebRequest www)
+    {
+        string events_json = www.downloadHandler.text;
+        Debug.Log("Object state: ");
+        Debug.Log(events_json);
+        var result = JSON.Parse(events_json);
+        int last = result[result.Count - 1]["id"].AsInt;
+        myExplorationEventManager.newestEventId = last;
+
+        if (last > myExplorationEventManager.lastProcessedEventId)
+        {
+            // put in queue
+            for (int i = 0; i < last - myExplorationEventManager.lastProcessedEventId; i++)
+            {
+                ExplorationEvent ev = new ExplorationEvent();
+                ev.explorationEventId = result[result.Count - 1 - i]["id"].AsInt;
+                ev.name = result[result.Count - 1 - i]["name"];
+                ev.description = result[result.Count - 1 - i]["description"];
+                myExplorationEventManager.insertToQueue(ev);
+            }
+        }
     }
 }
