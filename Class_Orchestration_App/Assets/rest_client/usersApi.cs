@@ -29,6 +29,8 @@ public class UsersApi : MonoBehaviour {
 	public Text teamID;
 	public GameObject model;
 
+    public GameObject explorationModeInfo;
+
 	/*
 	 * 
 	 * Classes to create objects that save state
@@ -99,7 +101,7 @@ public class UsersApi : MonoBehaviour {
 
 	}
 
-	/*
+    /*
 	 * 
 	 * API calls to the server.
 	 * 
@@ -107,9 +109,27 @@ public class UsersApi : MonoBehaviour {
 	 */
 
 
-	/*
+    /*
 	*	Users and Groups Api calls
 	*/
+
+    // Set exploration mode
+    public void setExplorationMode(string mode)
+    {
+        explorationModeInfo.GetComponentInChildren<Text>().text = mode;
+        if (mode.Equals("Guided")) {
+            explorationModeInfo.GetComponent<Image>().color =
+                new Color32(0, 100, 255, 100);
+        } else if (mode.Equals("Indiv."))
+        {
+            explorationModeInfo.GetComponent<Image>().color =
+                new Color32(255, 0, 100, 100);
+        } else
+        {
+            explorationModeInfo.GetComponent<Image>().color =
+                new Color32(100, 255, 0, 100);
+        }
+    }
 
 	// Get all the users
 	public string getUsers(){
