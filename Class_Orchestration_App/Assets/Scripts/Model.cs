@@ -16,7 +16,7 @@ public class Model : MonoBehaviour {
     // TODO: retrieve ID from database
     public int modelID;
 
-    private GameObject model;
+    public GameObject model;
     private GameObject preview;
 
     private bool scale = false;

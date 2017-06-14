@@ -16,10 +16,13 @@ using SimpleJSON;
 public class UsersApi : MonoBehaviour {
     ClassOrchestrationApi.RestClient myclient;
     ClassOrchestrationApi.ActionWWW getUsersCallback = GetUsersCallback;
+    ClassOrchestrationApi.ActionWWW getExplorationCallback = GetExplorationCallback;
     ClassOrchestrationApi.ActionWWW createUserCallback = CreateUserCallback;
     ClassOrchestrationApi.ActionWWW createExplorationCallback = CreateExplorationCallback;
     ClassOrchestrationApi.ActionWWW createExplorationObjectCallback = CreateExplorationObjectCallback;
     ClassOrchestrationApi.ActionWWW createEventCallback = CreateEventCallback;
+    ClassOrchestrationApi.ActionWWW getExplorationObjectStateCallback = GetExplorationObjectStateCallback;
+    
     string base_url = "http://miri.noedominguez.com:9000";
     //string base_url = "http://localhost:9000";
     static string all_users_json;
@@ -29,6 +32,11 @@ public class UsersApi : MonoBehaviour {
     static ExplorationEventManager myExplorationEventManager = new ExplorationEventManager();
     //static var myExplorationEvent;
 
+    static Vector3 myPosition;
+    static Quaternion myRotation;
+    static Vector3 myScale;
+
+    bool isStudent = false;
     bool exploration = false;
     bool teacherExplorationObject = false;
     int oldObjectId = -1;
@@ -65,6 +73,7 @@ public class UsersApi : MonoBehaviour {
         public int explorationId;
         public int teacherId;
         public int explorationObjectId;
+        public int explorationMode = 0; // 0: guided, 1: individual, 2: group
         public string toString() {
             return "id: " + explorationId + ", " + "teacherId: " + teacherId + ", " +
                 "explorationObjectId: " + explorationObjectId;
@@ -136,18 +145,54 @@ public class UsersApi : MonoBehaviour {
         {
             createExploration(myUser.user_id);
             exploration = true;
+        } else if (isStudent && !exploration)
+        {
+            // get newest entry for exploration
+            getExplorations();
+            exploration = true;
         }
 
         if (myExplorationObject.explorationObjectId != -1)
         {
             teacherExplorationObject = true;
+
         }
 
         if (exploration && teacherExplorationObject && (oldObjectId != currentObjectId))
         {
             oldObjectId = currentObjectId;
             updateExplorationObject(myExploration.explorationId, myExplorationObject.explorationObjectId);
+            createExplorationEvent("setExplorationObject", myExplorationObject.explorationObjectId.ToString());
         }
+
+        // teacher updates teacher's object
+
+        if (myUser.isAdmin && (myExplorationObject.explorationObjectId != -1))
+        {
+            string parameters = "";
+            parameters = model.GetComponent<Model>().model.transform.position.ToString();
+            parameters += ";";
+            parameters += model.GetComponent<Model>().model.transform.rotation.ToString();
+            parameters += ";";
+            parameters += model.GetComponent<Model>().model.transform.localScale.ToString();
+
+            updateObject(myExplorationObject.explorationObjectId, parameters);
+        }
+
+        // group members update group object
+
+        // guided exlporation
+        if (myExploration.explorationMode == 0 && !myUser.isAdmin && exploration)
+        {
+            getExplorationObjectState(myExploration.explorationObjectId);
+            model.GetComponent<Model>().model.transform.position.Set(
+                myPosition.x, myPosition.y, myPosition.z);
+            model.GetComponent<Model>().model.transform.rotation.Set(
+                myRotation.x, myRotation.y, myRotation.z, myRotation.w);
+            model.GetComponent<Model>().model.transform.localScale.Set(
+                myScale.x, myScale.y, myScale.z);
+        }
+
 	}
 
     /*
@@ -162,6 +207,17 @@ public class UsersApi : MonoBehaviour {
 	*	Users and Groups Api calls
 	*/
 
+    // get object state
+    public string getExplorationObjectState(int objectId)
+    {
+        string objectState = "";
+
+        string put_url = base_url + "/v1/exploration-object/" + objectId;
+        UnityWebRequest reponse = myclient.GET(put_url, GetExplorationObjectStateCallback);
+
+        return objectState;
+    }
+
     // Set exploration mode
     public void setExplorationMode(string mode)
     {
@@ -170,19 +226,31 @@ public class UsersApi : MonoBehaviour {
         if (mode.Equals("Guided")) {
             explorationModeInfo.GetComponent<Image>().color =
                 new Color32(0, 100, 255, 100);
+            updateExplorationMode(myExploration.explorationId, 0);
         }
         // individual
         else if (mode.Equals("Indiv."))
         {
             explorationModeInfo.GetComponent<Image>().color =
                 new Color32(255, 0, 100, 100);
+            updateExplorationMode(myExploration.explorationId, 1);
         }
         // group
         else
         {
             explorationModeInfo.GetComponent<Image>().color =
                 new Color32(100, 255, 0, 100);
+            updateExplorationMode(myExploration.explorationId, 2);
         }
+    }
+
+    public void updateObject(int objectId, string objectState)
+    {
+        string objectStateParam = objectState;
+        string put_url = base_url + "/v1/exploration-object/" + objectId;
+        string requestBodyJsonString = "{\"objectState\": \"" + objectStateParam + "\" }";
+        UnityWebRequest reponse = myclient.POST(put_url, requestBodyJsonString, createExplorationObjectCallback);
+        return;// reponse.downloadHandler.text;
     }
 
 	// Get all the users
@@ -192,13 +260,25 @@ public class UsersApi : MonoBehaviour {
 		return reponse.downloadHandler.text;
 	}
 
+    // Get all the explorations
+    public string getExplorations()
+    {
+        string get_url = base_url + "/v1/exploration/";
+        UnityWebRequest reponse = myclient.GET(get_url, getExplorationCallback);
+        return reponse.downloadHandler.text;
+    }
+
 
     // Create a user (userType: "professor" or "student by default")
     public void createUser(string userType = "student"){
 		string isAdmin = "false";
 		if (userType == "professor") {
 			isAdmin = "true";
-		}
+        }
+        else
+        {
+            isStudent = true;
+        }
 		string put_url = base_url + "/v1/user/new";
 		string requestBodyJsonString = 
 			"{\"name\": \"Google Cardboard User\", \"password\": \"new\", \"isAdmin\":" + 
@@ -242,6 +322,13 @@ public class UsersApi : MonoBehaviour {
         UnityWebRequest reponse = myclient.POST(put_url, requestBodyJsonString, createExplorationCallback);
         return;// reponse.downloadHandler.text;
 	}
+
+    public void updateExplorationMode(int explorationId, int explorationMode)
+    {
+        string put_url = base_url + "/v1/exploration/" + explorationId;
+        string requestBodyJsonString = "{\"explorationMode\":" + explorationMode + "}";
+        UnityWebRequest response = myclient.POST(put_url, requestBodyJsonString, createExplorationCallback);
+    }
 
     public string updateExplorationObject(int explorationId, int explorationObjectId)
     {
@@ -364,6 +451,43 @@ public class UsersApi : MonoBehaviour {
 		Debug.Log ( all_users_json );
 	}
 
+    public static void GetExplorationCallback(UnityWebRequest www)
+    {
+        string all_explorations_json = www.downloadHandler.text;
+        Debug.Log("All users JSON response:");
+        Debug.Log(all_explorations_json);
+        var result = JSON.Parse(all_explorations_json);
 
+        myExploration.explorationId = result[result.Count - 1]["id"].AsInt;
+        myExploration.teacherId = result[result.Count - 1]["teacherId"].AsInt;
+        myExploration.explorationObjectId = result[result.Count - 1]["explorationObjectId"].AsInt;
+        myExploration.explorationMode = result[result.Count - 1]["explorationMode"].AsInt;
+    }
 
+    public static void GetExplorationObjectStateCallback(UnityWebRequest www)
+    {
+        string object_state_json = www.downloadHandler.text;
+        Debug.Log("Object state: ");
+        Debug.Log(object_state_json);
+        var result = JSON.Parse(object_state_json);
+        string objectState = result["objectState"];
+        objectState = objectState.Replace("(", "");
+        objectState = objectState.Replace(")", "");
+        string[] transforms = objectState.Split(';');
+        string[] pos = transforms[0].Split(',');
+        Vector3 position;
+        position = new Vector3(float.Parse(pos[0]), float.Parse(pos[1]), float.Parse(pos[2]));
+        myPosition = position;
+
+        string[] rot = transforms[1].Split(',');
+        Quaternion rotation;
+        rotation = new Quaternion(
+            float.Parse(rot[0]), float.Parse(rot[1]), float.Parse(rot[2]), float.Parse(rot[3]));
+        myRotation = rotation;
+
+        string[] sca = transforms[2].Split(',');
+        Vector3 scale;
+        scale = new Vector3(float.Parse(sca[0]), float.Parse(sca[1]), float.Parse(sca[2]));
+        myScale = scale;
+    }
 }
