@@ -48,6 +48,33 @@ public class Model : MonoBehaviour {
         previewObject();
     }
 
+    public void setModel(int id)
+    {
+        if (id != modelID)
+        {
+            modelID = id;
+            resetObject();
+        }
+    }
+
+    public void setPosition(Vector3 position)
+    {
+        model.transform.position.Set(
+                position.x, position.y, position.z);
+    }
+
+    public void setRotation(Quaternion rotation)
+    {
+        model.transform.rotation.Set(
+                rotation.x, rotation.y, rotation.z, rotation.w);
+    }
+
+    public void setScale(Vector3 scale)
+    {
+        model.transform.localScale.Set(
+                scale.x, scale.y, scale.z);
+    }
+
     public void previewObject()
     {
         preview.SetActive(false);

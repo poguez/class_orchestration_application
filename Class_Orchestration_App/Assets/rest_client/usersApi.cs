@@ -200,17 +200,12 @@ public class UsersApi : MonoBehaviour {
         // guided exploration
         if (myExploration.explorationMode == 0 && !myUser.isAdmin && exploration)
         {
-            model.GetComponent<Model>().modelID = myModelType;
-            model.GetComponent<Model>().model = model.GetComponent<Model>().objects[myModelType];
+            model.GetComponent<Model>().setModel(myModelType);
 
             getExplorationObjectState(myExploration.explorationObjectId);
-            model.GetComponent<Model>().model.transform.position.Set(
-                myPosition.x, myPosition.y, myPosition.z);
-            model.GetComponent<Model>().model.transform.rotation.Set(
-                myRotation.x, myRotation.y, myRotation.z, myRotation.w);
-            model.GetComponent<Model>().model.transform.localScale.Set(
-                myScale.x, myScale.y, myScale.z);
-
+            model.GetComponent<Model>().setPosition(myPosition);
+            model.GetComponent<Model>().setRotation(myRotation);
+            model.GetComponent<Model>().setScale(myScale);
         }
 
 
