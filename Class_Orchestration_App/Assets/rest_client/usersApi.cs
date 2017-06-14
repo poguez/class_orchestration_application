@@ -19,12 +19,15 @@ public class UsersApi : MonoBehaviour {
 	ClassOrchestrationApi.ActionWWW createUserCallback = CreateUserCallback;
 	ClassOrchestrationApi.ActionWWW createExplorationCallback = CreateExplorationCallback;
 	ClassOrchestrationApi.ActionWWW createExplorationObjectCallback = CreateExplorationObjectCallback;
+	ClassOrchestrationApi.ActionWWW createEventCallback = CreateEventCallback;
 	string base_url = "http://miri.noedominguez.com:9000";
 	//string base_url = "http://localhost:9000";
 	static string all_users_json;
 	static User myUser = new User();
 	static Exploration myExploration = new Exploration();
 	static ExplorationObject myExplorationObject = new ExplorationObject();
+	static ExplorationEventManager myExplorationEventManager = new ExplorationEventManager();
+	//static var myExplorationEvent;
 
 	public Text teamID;
 	public GameObject model;
@@ -68,10 +71,33 @@ public class UsersApi : MonoBehaviour {
 		public string objectState;
 		public string modelName; // "dinosaur", "desk" or "dna"
 		public string toString(){
-			return "id: " + explorationObjectId + ", " + "objectState: " + objectState + 
-				"modelName: " + modelName;
+			return "id: \"" + explorationObjectId + "\", \"" + "objectState\": \"" + objectState + 
+				"\" \"modelName\": \"" + modelName + "\"";
 		}
 	}
+
+	public class ExplorationEventManager
+	{
+		public int newestEventId;
+		public int lastProcessedEventId;
+		public Queue <UsersApi.ExplorationEvent> awaitingProcessEventsQueue = new Queue <UsersApi.ExplorationEvent>();
+		public void insertToQueue(UsersApi.ExplorationEvent eventForQueue){
+			myExplorationEventManager.awaitingProcessEventsQueue.Enqueue (eventForQueue);
+		}
+
+	}
+	public class ExplorationEvent
+	{
+		public int explorationEventId;
+		public string name;
+		public string description;
+		public string toString(){
+			return "id: \"" + explorationEventId + "\", " + "name: \"" + name + 
+				"\" description: \"" + description + "\"";
+		}
+	}
+	
+
 
 	/*
 	 * 
@@ -88,11 +114,12 @@ public class UsersApi : MonoBehaviour {
 
 		// Examples
 		//getUsers ().ToString ();
-		createUser (); // create a student
+		//createUser (); // create a student
 		//createUser ("professor").ToString(); // create a professor
 		//changeUserTeam(20, 14);
 		//createExplorationObject ();
 		//createExploration (2,19);
+		createExplorationEvent ("changeExplorationObject", "This is a dummy description");
 	}
 
 	void Update () {
@@ -200,7 +227,20 @@ public class UsersApi : MonoBehaviour {
 		return;// reponse.downloadHandler.text;
 	}
 
+	/*
+	* Explorations Api calls
+	*/
 
+	// Create a Exploration Event (name, description)
+	public void createExplorationEvent(string name, string description){
+		string put_url = base_url + "/v1/exploration-event/new";
+		string requestBodyJsonString = 
+			"{\"name\": \"" + name + "\", " + "\"description\": \"" + description+"\" }";
+		Debug.Log ("This is the requestBody");
+		Debug.Log (requestBodyJsonString);
+		UnityWebRequest reponse = myclient.POST(put_url, requestBodyJsonString, createEventCallback);
+		return;// reponse.downloadHandler.text;
+	}
 
 
 	/*
@@ -246,6 +286,20 @@ public class UsersApi : MonoBehaviour {
 	}
 
 
+	public static void CreateEventCallback(UnityWebRequest www)
+	{	
+		var result = JSON.Parse(www.downloadHandler.text);
+		UsersApi.ExplorationEvent thisEvent = new ExplorationEvent ();
+		thisEvent.explorationEventId = result ["id"];
+		thisEvent.name = result ["name"];
+		thisEvent.description = result ["description"];
+		//Add the evento to the Exploration Event Manager
+		myExplorationEventManager.newestEventId = thisEvent.explorationEventId;
+		myExplorationEventManager.insertToQueue (thisEvent);
+		//Log the Enqueued Event
+		Debug.Log ("Exploration Event Enqueued print:");
+		Debug.Log ( thisEvent.toString() );
+	}
 
 	public static void GetUsersCallback(UnityWebRequest www)
 	{	

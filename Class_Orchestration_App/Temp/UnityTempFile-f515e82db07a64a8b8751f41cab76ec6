@@ -140,7 +140,7 @@
 'Assets/Vuforia/Scripts/WordBehaviour.cs'
 'Assets/quit.cs'
 'Assets/rest_client/ClassOrchestrationApi.cs'
-'Assets/rest_client/usersApi.cs'
+'Assets/rest_client/UsersApi.cs'
 -r:'/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity/System.Runtime.Serialization.dll'
 -r:'/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity/System.Xml.Linq.dll'
 -r:'/Applications/Unity/Unity.app/Contents/Mono/lib/mono/unity/UnityScript.dll'
