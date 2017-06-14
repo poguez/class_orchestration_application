@@ -154,9 +154,11 @@ public class UsersApi : MonoBehaviour {
             exploration = true;
         }
 
-        if (myExplorationObject.explorationObjectId != -1)
+        if (myUser.isAdmin && myExplorationObject.explorationObjectId != -1 && !teacherExplorationObject)
         {
             teacherExplorationObject = true;
+            createExplorationObject();
+            currentObjectId = myExplorationObject.explorationObjectId;
 
         }
 
@@ -165,6 +167,7 @@ public class UsersApi : MonoBehaviour {
             oldObjectId = currentObjectId;
             updateExplorationObject(myExploration.explorationId, myExplorationObject.explorationObjectId);
             createExplorationEvent("setExplorationObject", myExplorationObject.explorationObjectId.ToString());
+
         }
 
         // teacher updates teacher's object
@@ -196,6 +199,7 @@ public class UsersApi : MonoBehaviour {
                 myRotation.x, myRotation.y, myRotation.z, myRotation.w);
             model.GetComponent<Model>().model.transform.localScale.Set(
                 myScale.x, myScale.y, myScale.z);
+
         }
 
 
